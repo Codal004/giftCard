@@ -1,0 +1,225 @@
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  background-color: #fff;
+  transition: background-color 3s ease-in-out;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: flex;
+  justify-content: center; /* horizontal centering */
+  align-items: flex-start; /* aligns content at the top */
+  min-height: 1200px;
+  padding: 40px; /* top padding */
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #0a0a2a 0%, #03030a 100%);
+  opacity: 0;
+  transition: opacity 3s ease-in-out;
+}
+
+body.bg-open {
+  background-color: transparent;
+}
+
+body.bg-open::before {
+  opacity: 1;
+}
+
+.card {
+  width: 816px; 
+  height: 550px; 
+  position: relative;
+  perspective: 1400px;
+  transition: height 1s ease, width 1s ease;
+}
+
+.card.open {
+  height: 558px; 
+}
+
+/* Left part: the folded cover */
+/* This face should behave like a flap hinged at the bottom */
+.left-card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 2;
+  transition: transform 1s ease;
+  transform-style: preserve-3d;
+  transform-origin: bottom center;  /* hinge at bottom */
+}
+
+/* Images fill the container */
+.left-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Both sides of the cover */
+.left-card .card-front,
+.left-card .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+}
+
+/* Back side of the cover */
+.left-card .card-back {
+  background: #f4f4f4;
+  transform: rotateX(180deg);
+  box-shadow: 0px 0px 50px rgba(255, 255, 255, 0.5);
+}
+
+/* Flip */
+.card.open .left-card {
+  transform: rotateX(-180deg);
+}
+.card.open .left-card img {
+    opacity: 0.85; 
+    transition: opacity 2s ease-in-out; 
+  }
+
+/* Right part: the letter interior */
+.right-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  padding: 30px;
+  box-sizing: border-box;
+  text-align: center;
+  color: #444;
+  z-index: 1;
+  box-shadow: 0px 0px 50px rgba(255, 255, 255, 0.5);
+  overflow-y: auto;
+}
+
+/* Content styles */
+.right-card h2 {
+  color: crimson;
+  margin-bottom: 15px;
+}
+
+.right-card p {
+  font-size: 1em;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.right-card img {
+  max-width: 100%;
+  height: auto;
+  margin: 10px 0;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 400px) {
+  .card {
+    width: 90%;
+    /* adjust closed height proportionally */
+    height: calc(90% * 0.816); 
+  }
+  .card.open {
+    height: calc(90% * 1.293); 
+  }
+  .right-card {
+    padding: 15px;
+  }
+}
+
+/* Fireflies Container */
+#fireflies {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 2s ease;
+    z-index: 0; 
+  }
+  
+  /* Make fireflies visible when night mode is active */
+  body.bg-open #fireflies {
+    opacity: 1;
+  }
+  
+  /* Base style for a firefly */
+  .firefly {
+    position: absolute;
+    width: 1vw; 
+    height: 1vw; 
+    background: radial-gradient(circle, #ffff99 0%, rgba(255,255,153,0) 70%);
+    border-radius: 50%;
+    opacity: 0;
+    animation: fly 8s ease infinite;
+    pointer-events: none;
+    box-shadow: 0 0 10px rgba(255,255,153,0.5);
+  }
+  
+  /*keyframes for fly animation */
+  @keyframes fly {
+    0% {
+      transform: translate(0, 0) scale(0.5);
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    50% {
+      transform: translate(10vw, -20vh) scale(0.8);
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(-10vw, -100vh) scale(1);
+      opacity: 0;
+    }
+  }
+  
+  /* Assign some random positions and animation delays for fireflies */
+  .firefly:nth-child(1) {
+    left: 10%;
+    top: 70%;
+    animation-delay: 0s;
+  }
+  .firefly:nth-child(2) {
+    left: 30%;
+    top: 80%;
+    animation-delay: 1s;
+  }
+  .firefly:nth-child(3) {
+    left: 50%;
+    top: 60%;
+    animation-delay: 2s;
+  }
+  .firefly:nth-child(4) {
+    left: 70%;
+    top: 75%;
+    animation-delay: 0.5s;
+  }
+  .firefly:nth-child(5) {
+    left: 90%;
+    top: 85%;
+    animation-delay: 1.5s;
+  }
