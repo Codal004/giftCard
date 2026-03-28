@@ -100,13 +100,12 @@ body.bg-open::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: #fff;
+  background: #ffffff;
   padding: 30px;
   box-sizing: border-box;
   text-align: center;
   color: #444;
   z-index: 1;
-  /* cursed energy border */
   border: 1px solid rgba(100, 149, 237, 0.3);
   box-shadow:
     0px 0px 40px rgba(255, 255, 255, 0.3),
@@ -114,6 +113,27 @@ body.bg-open::before {
     0 0 40px rgba(100, 149, 237, 0.15),
     inset 0 0 18px rgba(100, 149, 237, 0.06);
   overflow-y: auto;
+  /* smooth dark transition */
+  transition:
+    background 3s ease,
+    box-shadow 3s ease,
+    border-color 3s ease;
+}
+
+/* Dark shift when music turns */
+.right-card.dark-shift {
+  background: #ede0de;
+  border-color: rgba(139, 0, 0, 0.5);
+  box-shadow:
+    0 0 30px rgba(255, 255, 255, 0.08),
+    0 0 22px rgba(139, 0, 0, 0.45),
+    0 0 55px rgba(139, 0, 0, 0.22),
+    inset 0 0 22px rgba(139, 0, 0, 0.08);
+}
+
+.right-card.dark-shift .content {
+  filter: sepia(0.12) brightness(0.93);
+  transition: filter 3s ease;
 }
 
 .right-card h2 {
@@ -133,7 +153,7 @@ body.bg-open::before {
   margin: 10px 0;
 }
 
-/* P.S. dark humor note */
+/* P.S. — hidden until dark transition completes */
 .ps-note {
   font-family: Pacifico, cursive;
   font-size: 12px;
@@ -141,7 +161,12 @@ body.bg-open::before {
   font-style: italic;
   text-align: right;
   margin-top: 10px;
-  opacity: 0.85;
+  opacity: 0;
+  transition: opacity 2.5s ease;
+}
+
+.ps-note.ps-visible {
+  opacity: 0.9;
 }
 
 /* Responsive adjustments */
@@ -158,7 +183,46 @@ body.bg-open::before {
   }
 }
 
-/* Petals Container */
+/* ── Rose corners ────────────────────────────────────────── */
+.rose-corners {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0;
+  transition: opacity 1s ease 0.6s;
+}
+
+.card.open .rose-corners {
+  opacity: 1;
+}
+
+.rose {
+  position: absolute;
+  font-size: 36px;
+  line-height: 1;
+  display: block;
+  transition:
+    transform 3s ease,
+    filter 3s ease;
+}
+
+/* Fresh positions — slight natural tilt */
+.rose-tl { top: 14px;    left: 16px;  transform: rotate(-15deg); transform-origin: bottom center; }
+.rose-tr { top: 14px;    right: 16px; transform: rotate(15deg);  transform-origin: bottom center; }
+.rose-bl { bottom: 14px; left: 16px;  transform: rotate(12deg);  transform-origin: bottom center; }
+.rose-br { bottom: 14px; right: 16px; transform: rotate(-12deg); transform-origin: bottom center; }
+
+/* Wilting — droop + desaturate */
+.card.wilting .rose-tl { transform: rotate(-58deg); filter: brightness(0.42) saturate(0.15); }
+.card.wilting .rose-tr { transform: rotate(58deg);  filter: brightness(0.42) saturate(0.15); }
+.card.wilting .rose-bl { transform: rotate(52deg);  filter: brightness(0.38) saturate(0.15); }
+.card.wilting .rose-br { transform: rotate(-52deg); filter: brightness(0.38) saturate(0.15); }
+
+/* ── Petals Container ────────────────────────────────────── */
 #petals {
   position: fixed;
   top: 0;
@@ -175,7 +239,6 @@ body.bg-open #petals {
   opacity: 1;
 }
 
-/* Base petal style */
 .petal {
   position: absolute;
   background: radial-gradient(ellipse at 40% 40%, #3d0015 0%, #140008 100%);
@@ -187,27 +250,13 @@ body.bg-open #petals {
 }
 
 @keyframes fall {
-  0% {
-    transform: translateY(-8vh) rotate(0deg) translateX(0px);
-    opacity: 0;
-  }
-  8% {
-    opacity: 0.75;
-  }
-  50% {
-    transform: translateY(55vh) rotate(200deg) translateX(25px);
-    opacity: 0.55;
-  }
-  92% {
-    opacity: 0.2;
-  }
-  100% {
-    transform: translateY(112vh) rotate(380deg) translateX(-15px);
-    opacity: 0;
-  }
+  0%   { transform: translateY(-8vh)   rotate(0deg)   translateX(0px);   opacity: 0; }
+  8%   { opacity: 0.75; }
+  50%  { transform: translateY(55vh)   rotate(200deg) translateX(25px);  opacity: 0.55; }
+  92%  { opacity: 0.2; }
+  100% { transform: translateY(112vh)  rotate(380deg) translateX(-15px); opacity: 0; }
 }
 
-/* Individual petal positions, sizes, delays */
 .petal:nth-child(1)  { left: 5%;  width: 8px;  height: 13px; animation-duration: 7s;  animation-delay: 0s; }
 .petal:nth-child(2)  { left: 12%; width: 10px; height: 16px; animation-duration: 9s;  animation-delay: 1.5s; }
 .petal:nth-child(3)  { left: 20%; width: 7px;  height: 11px; animation-duration: 6s;  animation-delay: 3s; }
@@ -235,7 +284,7 @@ body.bg-open #petals {
 .petal:nth-child(25) { left: 96%; width: 10px; height: 16px; animation-duration: 9s;  animation-delay: 1.4s; }
 .petal:nth-child(26) { left: 40%; width: 8px;  height: 13px; animation-duration: 7s;  animation-delay: 6s; }
 
-/* Gojo polaroid photo */
+/* ── Gojo polaroid photo ─────────────────────────────────── */
 .gojo-photo {
   float: right;
   margin: 8px 4px 12px 20px;
@@ -259,7 +308,7 @@ body.bg-open #petals {
   margin: 0;
 }
 
-/* Black washi tape strip */
+/* Black washi tape */
 .gojo-photo::before {
   content: '';
   position: absolute;
@@ -272,8 +321,7 @@ body.bg-open #petals {
   background-image:
     repeating-linear-gradient(
       90deg,
-      transparent,
-      transparent 4px,
+      transparent, transparent 4px,
       rgba(255, 255, 255, 0.04) 4px,
       rgba(255, 255, 255, 0.04) 6px
     ),
