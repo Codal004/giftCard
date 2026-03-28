@@ -7,7 +7,7 @@
 
 body {
   position: relative;
-  background-color: #fff;
+  background-color: #0a0005;
   transition: background-color 3s ease-in-out;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   display: flex;
@@ -24,7 +24,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, #0a0a2a 0%, #03030a 100%);
+  background: linear-gradient(180deg, #2a0008 0%, #0d0003 50%, #000000 100%);
   opacity: 0;
   transition: opacity 3s ease-in-out;
 }
@@ -81,7 +81,7 @@ body.bg-open::before {
 .left-card .card-back {
   background: #f4f4f4;
   transform: rotateX(180deg);
-  box-shadow: 0px 0px 50px rgba(255, 255, 255, 0.5);
+  box-shadow: 0px 0px 50px rgba(255, 255, 255, 0.3);
 }
 
 .card.open .left-card {
@@ -106,7 +106,13 @@ body.bg-open::before {
   text-align: center;
   color: #444;
   z-index: 1;
-  box-shadow: 0px 0px 50px rgba(255, 255, 255, 0.5);
+  /* cursed energy border */
+  border: 1px solid rgba(100, 149, 237, 0.3);
+  box-shadow:
+    0px 0px 40px rgba(255, 255, 255, 0.3),
+    0 0 18px rgba(100, 149, 237, 0.35),
+    0 0 40px rgba(100, 149, 237, 0.15),
+    inset 0 0 18px rgba(100, 149, 237, 0.06);
   overflow-y: auto;
 }
 
@@ -127,6 +133,17 @@ body.bg-open::before {
   margin: 10px 0;
 }
 
+/* P.S. dark humor note */
+.ps-note {
+  font-family: Pacifico, cursive;
+  font-size: 12px;
+  color: #8b0000;
+  font-style: italic;
+  text-align: right;
+  margin-top: 10px;
+  opacity: 0.85;
+}
+
 /* Responsive adjustments */
 @media screen and (max-width: 400px) {
   .card {
@@ -141,8 +158,8 @@ body.bg-open::before {
   }
 }
 
-/* Fireflies Container */
-#fireflies {
+/* Petals Container */
+#petals {
   position: fixed;
   top: 0;
   left: 0;
@@ -154,69 +171,87 @@ body.bg-open::before {
   z-index: 0;
 }
 
-body.bg-open #fireflies {
+body.bg-open #petals {
   opacity: 1;
 }
 
-.firefly {
+/* Base petal style */
+.petal {
   position: absolute;
-  width: 1vw;
-  height: 1vw;
-  background: radial-gradient(circle, #ffff99 0%, rgba(255,255,153,0) 70%);
-  border-radius: 50%;
+  background: radial-gradient(ellipse at 40% 40%, #3d0015 0%, #140008 100%);
+  border-radius: 60% 0 60% 0;
   opacity: 0;
-  animation: fly 8s ease infinite;
+  animation: fall linear infinite;
   pointer-events: none;
-  box-shadow: 0 0 10px rgba(255,255,153,0.5);
+  box-shadow: 0 0 4px rgba(100, 0, 30, 0.4);
 }
 
-@keyframes fly {
+@keyframes fall {
   0% {
-    transform: translate(0, 0) scale(0.5);
+    transform: translateY(-8vh) rotate(0deg) translateX(0px);
     opacity: 0;
   }
-  20% {
-    opacity: 1;
+  8% {
+    opacity: 0.75;
   }
   50% {
-    transform: translate(10vw, -20vh) scale(0.8);
-    opacity: 0.8;
+    transform: translateY(55vh) rotate(200deg) translateX(25px);
+    opacity: 0.55;
+  }
+  92% {
+    opacity: 0.2;
   }
   100% {
-    transform: translate(-10vw, -100vh) scale(1);
+    transform: translateY(112vh) rotate(380deg) translateX(-15px);
     opacity: 0;
   }
 }
 
-.firefly:nth-child(1)  { left: 10%; top: 70%; animation-delay: 0s; }
-.firefly:nth-child(2)  { left: 30%; top: 80%; animation-delay: 1s; }
-.firefly:nth-child(3)  { left: 50%; top: 60%; animation-delay: 2s; }
-.firefly:nth-child(4)  { left: 70%; top: 75%; animation-delay: 0.5s; }
-.firefly:nth-child(5)  { left: 90%; top: 85%; animation-delay: 1.5s; }
+/* Individual petal positions, sizes, delays */
+.petal:nth-child(1)  { left: 5%;  width: 8px;  height: 13px; animation-duration: 7s;  animation-delay: 0s; }
+.petal:nth-child(2)  { left: 12%; width: 10px; height: 16px; animation-duration: 9s;  animation-delay: 1.5s; }
+.petal:nth-child(3)  { left: 20%; width: 7px;  height: 11px; animation-duration: 6s;  animation-delay: 3s; }
+.petal:nth-child(4)  { left: 28%; width: 9px;  height: 14px; animation-duration: 11s; animation-delay: 0.5s; }
+.petal:nth-child(5)  { left: 35%; width: 11px; height: 17px; animation-duration: 8s;  animation-delay: 2s; }
+.petal:nth-child(6)  { left: 42%; width: 8px;  height: 12px; animation-duration: 7s;  animation-delay: 4s; }
+.petal:nth-child(7)  { left: 50%; width: 10px; height: 15px; animation-duration: 10s; animation-delay: 1s; }
+.petal:nth-child(8)  { left: 58%; width: 9px;  height: 14px; animation-duration: 8s;  animation-delay: 3.5s; }
+.petal:nth-child(9)  { left: 65%; width: 7px;  height: 11px; animation-duration: 9s;  animation-delay: 0.8s; }
+.petal:nth-child(10) { left: 72%; width: 11px; height: 17px; animation-duration: 7s;  animation-delay: 2.5s; }
+.petal:nth-child(11) { left: 80%; width: 8px;  height: 13px; animation-duration: 11s; animation-delay: 1.2s; }
+.petal:nth-child(12) { left: 88%; width: 10px; height: 15px; animation-duration: 6s;  animation-delay: 4.5s; }
+.petal:nth-child(13) { left: 93%; width: 9px;  height: 14px; animation-duration: 9s;  animation-delay: 0.3s; }
+.petal:nth-child(14) { left: 8%;  width: 7px;  height: 11px; animation-duration: 8s;  animation-delay: 5s; }
+.petal:nth-child(15) { left: 16%; width: 10px; height: 16px; animation-duration: 10s; animation-delay: 2.8s; }
+.petal:nth-child(16) { left: 24%; width: 8px;  height: 13px; animation-duration: 7s;  animation-delay: 1.7s; }
+.petal:nth-child(17) { left: 33%; width: 11px; height: 17px; animation-duration: 9s;  animation-delay: 3.8s; }
+.petal:nth-child(18) { left: 46%; width: 9px;  height: 14px; animation-duration: 6s;  animation-delay: 0.6s; }
+.petal:nth-child(19) { left: 54%; width: 7px;  height: 11px; animation-duration: 11s; animation-delay: 4.2s; }
+.petal:nth-child(20) { left: 62%; width: 10px; height: 15px; animation-duration: 8s;  animation-delay: 1.9s; }
+.petal:nth-child(21) { left: 70%; width: 8px;  height: 12px; animation-duration: 9s;  animation-delay: 3.1s; }
+.petal:nth-child(22) { left: 78%; width: 11px; height: 17px; animation-duration: 7s;  animation-delay: 5.5s; }
+.petal:nth-child(23) { left: 85%; width: 9px;  height: 14px; animation-duration: 10s; animation-delay: 2.2s; }
+.petal:nth-child(24) { left: 3%;  width: 7px;  height: 11px; animation-duration: 8s;  animation-delay: 4.8s; }
+.petal:nth-child(25) { left: 96%; width: 10px; height: 16px; animation-duration: 9s;  animation-delay: 1.4s; }
+.petal:nth-child(26) { left: 40%; width: 8px;  height: 13px; animation-duration: 7s;  animation-delay: 6s; }
 
-/* ── Gojo polaroid photo ────────────────────────────────────── */
+/* Gojo polaroid photo */
 .gojo-photo {
   float: right;
   margin: 8px 4px 12px 20px;
   width: 158px;
-  /* warm photo-paper tone */
   background: #fef9ed;
-  /* polaroid frame: thin sides, thick bottom */
   padding: 7px 7px 32px 7px;
-  /* layered shadow: close sharp lift + wide soft ambient */
   box-shadow:
-    1px 2px 4px rgba(0, 0, 0, 0.18),
-    3px 6px 14px rgba(0, 0, 0, 0.16),
-    7px 14px 28px rgba(0, 0, 0, 0.12);
-  /* slight tilt — hand-placed feel */
+    1px 2px 4px rgba(0, 0, 0, 0.22),
+    3px 6px 14px rgba(0, 0, 0, 0.18),
+    7px 14px 28px rgba(0, 0, 0, 0.14);
   transform: rotate(3.5deg);
   position: relative;
   z-index: 5;
-  /* subtle paper edge */
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.07);
 }
 
-/* Override the generic right-card img rule */
 .gojo-photo img {
   width: 100%;
   height: auto;
@@ -224,7 +259,7 @@ body.bg-open #fireflies {
   margin: 0;
 }
 
-/* Scotch tape strip */
+/* Black washi tape strip */
 .gojo-photo::before {
   content: '';
   position: absolute;
@@ -233,23 +268,21 @@ body.bg-open #fireflies {
   transform: translateX(-50%) rotate(-1deg);
   width: 54px;
   height: 20px;
-  /* semi-transparent blue-tinted tape */
-  background: rgba(210, 225, 255, 0.5);
-  /* fine vertical lines for tape texture */
+  background: rgba(18, 10, 10, 0.72);
   background-image:
     repeating-linear-gradient(
       90deg,
       transparent,
-      transparent 3px,
-      rgba(255, 255, 255, 0.16) 3px,
-      rgba(255, 255, 255, 0.16) 5px
+      transparent 4px,
+      rgba(255, 255, 255, 0.04) 4px,
+      rgba(255, 255, 255, 0.04) 6px
     ),
-    linear-gradient(rgba(210, 225, 255, 0.5), rgba(210, 225, 255, 0.5));
+    linear-gradient(rgba(18, 10, 10, 0.72), rgba(18, 10, 10, 0.72));
   border-radius: 1px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
 }
 
-/* Clearfix so floated photo doesn't escape the content box */
+/* Clearfix */
 .content::after {
   content: '';
   display: table;
