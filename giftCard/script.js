@@ -13,8 +13,9 @@ document.addEventListener("DOMContentLoaded", function () {
   function resetCard() {
     card.classList.remove("wilting");
     rightCard.classList.remove("dark-shift");
+    body.classList.remove("dark-bg");
     psNote.classList.remove("ps-visible");
-    roses.forEach(r => { r.innerHTML = "&#x1F339;"; }); // back to fresh rose
+    roses.forEach(r => { r.innerHTML = "&#x1F339;"; }); // fresh rose
     darkTriggered = false;
     psTriggered   = false;
   }
@@ -34,12 +35,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (music) {
     music.addEventListener("timeupdate", function () {
-      // At 27s: roses wilt, letter darkens
+      // At 27s: roses wilt, letter darkens, bloody background kicks in
       if (music.currentTime >= 27 && !darkTriggered) {
         darkTriggered = true;
         card.classList.add("wilting");
         rightCard.classList.add("dark-shift");
-        roses.forEach(r => { r.innerHTML = "&#x1F940;"; }); // wilted rose 🥀
+        body.classList.add("dark-bg");
+        roses.forEach(r => { r.innerHTML = "&#x1F940;"; }); // wilted rose
       }
       // At 33s: P.S. fades in
       if (music.currentTime >= 33 && !psTriggered) {
